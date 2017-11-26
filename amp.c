@@ -4,6 +4,11 @@
 #define BUFFER_SIZE 4096
 #define LAST_FD 10      // Last supported file descriptor (3 <= x <= LAST_FD)
 
+#define ERR_IMBALANCE   -1
+#define ERR_EOF         -2
+#define ERR_WRITE       -3
+#define ERR_FLUSH       -4
+
 struct Stream {
     FILE          *file;
     struct Stream *next;
@@ -77,9 +82,10 @@ void list_clear() {
 /*
     Tries to open all streams up to LAST_FD for writing and adds them to the list
 */
-void open_streams() {
+int open_streams() {
     int i = 0;
     int added = 0;
+    int result = 0;
     FILE *file = NULL;
     
     for (i = 3; i <= LAST_FD; i++) {
@@ -94,19 +100,24 @@ void open_streams() {
         if (added != 0) {
             continue;
         }
+        
+        result++;
     }
+    
+    return result;
 }
 
 /*
     Reads from stdin and writes the buffer to the output streams
 */
-void amplify() {
+void amplify(int streams) {
     struct Stream *current = head;
     unsigned char buffer[BUFFER_SIZE];
     size_t read = 0;
     size_t written = 0;
+    int active_streams = streams;
     
-    while ((read = fread(buffer, sizeof(unsigned char), BUFFER_SIZE, stdin)) > 0) {
+    while ((read = fread(buffer, sizeof(unsigned char), BUFFER_SIZE, stdin)) > 0 && active_streams > 0) {
         current = head;
         
         while (current != NULL) {
@@ -116,20 +127,31 @@ void amplify() {
             
             written = fwrite(buffer, sizeof(unsigned char), read, current->file);
             
-            if (ferror(current->file) != 0) {
-                current->status = -1;
-                clearerr(current->file);
-            }
-            
             if (read != written) {
-                current->status = -1;
+                current->status = ERR_IMBALANCE;
             }
             
-            fflush(current->file);
+            if (feof(current->file) != 0) {
+                current->status = ERR_EOF;
+                clearerr(current->file);
+            }
             
             if (ferror(current->file) != 0) {
-                current->status = -1;
+                current->status = ERR_WRITE;
                 clearerr(current->file);
+            }
+            
+            if (current->status != ERR_WRITE) {
+                fflush(current->file);
+                
+                if (ferror(current->file) != 0) {
+                    current->status = ERR_FLUSH;
+                    clearerr(current->file);
+                }
+            }
+            
+            if (current->status != 0) {
+                active_streams--;
             }
             
             current = current->next;
@@ -139,6 +161,7 @@ void amplify() {
 
 int main(int argc, char **argv) {
     int err = 0;
+    int streams = 0;
     
     err = list_init();
     
@@ -146,13 +169,12 @@ int main(int argc, char **argv) {
         goto exit;
     }
     
-    open_streams();
+    streams = open_streams();
     
-    amplify();
+    amplify(streams);
     
     list_clear();
 
 exit:
     return err;
 }
-
