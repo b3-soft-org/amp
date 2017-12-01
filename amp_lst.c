@@ -62,18 +62,18 @@ int open_streams()
     int result = 0;
     FILE *file = NULL;
     
-    for (fd = 1; fd <= args.last_fd; fd++)
+    if (args.ign_stdout == 0)
     {
-        if (fd == 1 && args.ign_stdout == 1)
-        {
-            continue;
-        }
-        
-        if (fd == 2 && args.use_stderr == 0)
-        {
-            continue;
-        }
-        
+        list_add(file, stdout);
+    }
+    
+    if (args.use_stderr == 1)
+    {
+        list_add(file, stderr);
+    }
+    
+    for (fd = 3; fd <= args.last_fd; fd++)
+    {
         file = fdopen(fd, "wb");
         
         if (file == NULL)
