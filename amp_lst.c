@@ -64,12 +64,12 @@ int open_streams()
     
     if (args.ign_stdout == 0)
     {
-        list_add(file, stdout);
+        list_add(stdout, 1);
     }
     
     if (args.use_stderr == 1)
     {
-        list_add(file, stderr);
+        list_add(stderr, 2);
     }
     
     for (fd = 3; fd <= args.last_fd; fd++)
