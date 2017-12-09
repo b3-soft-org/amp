@@ -1,7 +1,7 @@
 # amp
 A small tool that reads data from standard input (stdin) and writes it to various output streams.
 
-**This version has a lot of new features and is not stable yet, so please use with care!**
+*I'm still working hard to implement new features and improve the code. I hope to get a stable version done the next few days*
 
 ## How to compile
 
