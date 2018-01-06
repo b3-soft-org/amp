@@ -44,7 +44,7 @@ int amplify(int streams)
     
     if (buffer == NULL)
     {
-        log_error("Failed to allocate memory for buffer!\n");
+        log_error("Failed to allocate %lld bytes for buffer.\n", bufsiz);
         
         return 1;
     }
