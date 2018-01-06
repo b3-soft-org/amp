@@ -1,4 +1,4 @@
-// Copyright 2017 Matthias Schwarz
+// Copyright 2018 Matthias Schwarz
 // License: MIT
 
 #include "amp.h"
