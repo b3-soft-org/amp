@@ -1,7 +1,17 @@
 // Copyright 2018 Matthias Schwarz
 // License: MIT
 
+
+
+/*
+    Functions to parse the given options.
+*/
+
+
+
 #include "amp.h"
+
+
 
 struct argp_option options[] =
 {
@@ -14,10 +24,13 @@ struct argp_option options[] =
     { 0 }
 };
 
-char doc[] = "amp - Read from stdin and write to various output streams.";
+const char *argp_program_version = "1.0";
+const char  doc[]                = "amp - Read from stdin and write to various output streams.";
 
 struct argp argp = { options, parse_opt, NULL, doc };
 struct args args;
+
+
 
 error_t parse_opt(int key, char *arg, struct argp_state *state)
 {
@@ -54,6 +67,9 @@ error_t parse_opt(int key, char *arg, struct argp_state *state)
     return 0;
 }
 
+/*
+    Parses the given buffer size.
+*/
 int get_buffer_size(char *arg, unsigned long long *buffer_size)
 {
     unsigned long long value = 0;
@@ -139,6 +155,9 @@ int get_buffer_size(char *arg, unsigned long long *buffer_size)
     return 0;
 }
 
+/*
+    Parses the given count.
+*/
 int get_count(char *arg, unsigned long long *count)
 {
     unsigned long long value = 0;
@@ -224,6 +243,9 @@ int get_count(char *arg, unsigned long long *count)
     return 0;
 }
 
+/*
+    Parses the given last file descriptor.
+*/
 int get_last_fd(char *arg, unsigned int *last_fd)
 {
     unsigned long long value = 0;
@@ -289,6 +311,9 @@ int get_last_fd(char *arg, unsigned int *last_fd)
     return 0;
 }
 
+/*
+    Parses the given number of lines.
+*/
 int get_lines(char *arg, unsigned long long *lines)
 {
     unsigned long long value = 0;
@@ -374,6 +399,9 @@ int get_lines(char *arg, unsigned long long *lines)
     return 0;
 }
 
+/*
+    Parses the given status rate.
+*/
 int get_status_rate(char *arg, unsigned long long *status_rate, int *status_type)
 {
     unsigned long long value = 0;

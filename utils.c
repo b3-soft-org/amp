@@ -1,11 +1,24 @@
 // Copyright 2018 Matthias Schwarz
 // License: MIT
 
+
+
+/*
+    Miscellanous utility functions.
+*/
+
+
+
 #include "amp.h"
+
+
 
 const char *SIZE_SUFFIX[] = { "B", "KB", "MB", "GB", "TB", "EB" };
 const char *TIME_SUFFIX[] = { "s", "m", "h", "d" };
 
+/*
+    Determines whether the linked list has any writable stream.
+*/
 int has_any_stream()
 {
     struct stream *current = head;
@@ -22,6 +35,9 @@ int has_any_stream()
     return 0;
 }
 
+/*
+    Converts the given size value to a human-readable format.
+*/
 void format_size(unsigned long long value, double *result, int *suffix)
 {
     int    e = 0.0;
@@ -34,6 +50,9 @@ void format_size(unsigned long long value, double *result, int *suffix)
     *suffix = e;
 }
 
+/*
+    Converts the given time value to a human-readable format.
+*/
 void format_time(double value, double *result, int *suffix)
 {
     if (value < 60)
@@ -58,6 +77,9 @@ void format_time(double value, double *result, int *suffix)
     }
 }
 
+/*
+    Prints the current status.
+*/
 void print_status(unsigned long long total, double elapsed_time)
 {
     double size    = 0.0;
@@ -80,7 +102,6 @@ void print_status(unsigned long long total, double elapsed_time)
     else
     {
         speed = total / elapsed_time;
-        
         format_size(speed, &speedf, &spdsufx);
         
         log_info("%9.2f %s    %6.2f %s    (%5.2f %s/s)\n", size, SIZE_SUFFIX[sizesuf], time, TIME_SUFFIX[timesuf], speedf, SIZE_SUFFIX[spdsufx]);

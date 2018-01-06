@@ -1,7 +1,17 @@
 // Copyright 2018 Matthias Schwarz
 // License: MIT
 
+
+
+/*
+    Main entry point.
+*/
+
+
+
 #include "amp.h"
+
+
 
 int main(int argc, char **argv)
 {

@@ -1,8 +1,21 @@
 // Copyright 2018 Matthias Schwarz
 // License: MIT
 
+
+
+/*
+    Miscellanous logging functions.
+*/
+
+
+
 #include "amp.h"
 
+
+
+/*
+    Core function to log to stderr.
+*/
 void log_core(const char *preamble, const char *format, va_list vl)
 {
     time_t now;

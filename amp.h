@@ -1,6 +1,8 @@
 // Copyright 2018 Matthias Schwarz
 // License: MIT
 
+
+
 #ifndef AMP_H
 #define AMP_H
 

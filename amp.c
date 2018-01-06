@@ -1,13 +1,23 @@
 // Copyright 2018 Matthias Schwarz
 // License: MIT
 
+
+
+/*
+    Core function to read from stdin and write to the output streams.
+*/
+
+
+
 #include "amp.h"
+
+
 
 struct stream *head;
 struct stream *tail;
 
 /*
-    Read from stdin and write the buffer to the output streams
+    Reads from stdin and writes the buffer to the output streams
 */
 int amplify(int streams)
 {
@@ -33,10 +43,10 @@ int amplify(int streams)
     double total_elapsed_time = 0.0;
     
     bufsiz = args.buffer_size;
-    if (args.count < bufsiz)
+    if (args.count != DEF_COUNT && args.count < bufsiz)
     {
-        // If the buffer size is greater than the
-        // requested count, only read up to count bytes.
+        // It makes no sense to read more than 'count' bytes into the buffer,
+        // if the given buffer size is larger than 'count'.
         bufsiz = args.count;
     }
     

@@ -1,10 +1,21 @@
 // Copyright 2018 Matthias Schwarz
 // License: MIT
 
-#include "amp.h"
+
 
 /*
-    Add an item to the linked list, or create the list, if it doesn't exist.
+    Functions to open output streams, initialize and clear
+    the linked list and add items to the linked list.
+*/ 
+
+
+
+#include "amp.h"
+
+
+
+/*
+    Adds an item to the linked list, or creates the list, if it doesn't exist.
 */
 int list_add(FILE *file, int index)
 {
@@ -24,11 +35,13 @@ int list_add(FILE *file, int index)
     
     if (head == NULL)
     {
+        // Initialize linked list
         head = item;
         tail = item;
     }
     else
     {
+        // Add item to linked list
         tail->next = item;
         tail = item;
     }
@@ -58,7 +71,7 @@ void list_clear()
 }
 
 /*
-    Try to open all streams up to last_fd for writing and add them to the list.
+    Tries to open all streams up to last_fd for writing and adds them to the list.
 */
 int open_streams()
 {
@@ -88,7 +101,7 @@ int open_streams()
         
         if (file == NULL)
         {
-            // Failed to open stream. Try next
+            // Failed to open stream. Try next...
             continue;
         }
         
