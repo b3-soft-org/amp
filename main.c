@@ -81,7 +81,7 @@ int main(int argc, char **argv)
         goto cleanup;
     }
     
-    if (args.count < args.buffer_size)
+    if (args.count != DEF_COUNT && args.count < args.buffer_size)
     {
         log_warning("The buffer size is greater than the requested number of bytes (count).\n");
     }
