@@ -75,6 +75,7 @@ int get_buffer_size(char *arg, unsigned long long *buffer_size)
     unsigned long long value = 0;
     unsigned long long factor = 0;
     int   endlen = 0;
+    char *argptr;
     char *endptr;
     
     if (arg == NULL)
@@ -84,8 +85,20 @@ int get_buffer_size(char *arg, unsigned long long *buffer_size)
         return 0;
     }
     
+    argptr = arg;
+    
+    // Skip any leading blanks
+    while (isspace(*argptr)) { argptr++; }
+    
+    if (*argptr == '-')
+    {
+        log_error("Argument 'buffer' must be non-negative.\n");
+        
+        return 1;
+    }
+    
     errno = 0;
-    value = strtoull(arg, &endptr, 10);
+    value = strtoull(argptr, &endptr, 10);
     
     if (errno != 0)
     {
@@ -104,7 +117,7 @@ int get_buffer_size(char *arg, unsigned long long *buffer_size)
         }
     }
     
-    if (arg == endptr)
+    if (argptr == endptr)
     {
         log_error("Argument 'buffer' does not contain any digits.\n");
         
@@ -163,6 +176,7 @@ int get_count(char *arg, unsigned long long *count)
     unsigned long long value = 0;
     unsigned long long factor = 0;
     int   endlen = 0;
+    char *argptr;
     char *endptr;
     
     if (arg == NULL)
@@ -172,8 +186,20 @@ int get_count(char *arg, unsigned long long *count)
         return 0;
     }
     
+    argptr = arg;
+    
+    // Skip any leading blanks
+    while (isspace(*argptr)) { argptr++; }
+    
+    if (*argptr == '-')
+    {
+        log_error("Argument 'count' must be non-negative.\n");
+        
+        return 1;
+    }
+    
     errno = 0;
-    value = strtoull(arg, &endptr, 10);
+    value = strtoull(argptr, &endptr, 10);
     
     if (errno != 0)
     {
@@ -192,7 +218,7 @@ int get_count(char *arg, unsigned long long *count)
         }
     }
     
-    if (arg == endptr)
+    if (argptr == endptr)
     {
         log_error("Argument 'count' does not contain any digits.\n");
         
@@ -249,6 +275,7 @@ int get_count(char *arg, unsigned long long *count)
 int get_last_fd(char *arg, unsigned int *last_fd)
 {
     unsigned long long value = 0;
+    char *argptr;
     char *endptr;
     
     if (arg == NULL)
@@ -258,8 +285,20 @@ int get_last_fd(char *arg, unsigned int *last_fd)
         return 0;
     }
     
+    argptr = arg;
+    
+    // Skip any leading blanks
+    while (isspace(*argptr)) { argptr++; }
+    
+    if (*argptr == '-')
+    {
+        log_error("Argument 'last_fd' must be non-negative.\n");
+        
+        return 1;
+    }
+    
     errno = 0;
-    value = strtoul(arg, &endptr, 10);
+    value = strtoul(argptr, &endptr, 10);
     
     if (errno != 0)
     {
@@ -278,7 +317,7 @@ int get_last_fd(char *arg, unsigned int *last_fd)
         }
     }
     
-    if (arg == endptr)
+    if (argptr == endptr)
     {
         log_error("Argument 'last_fd' does not contain any digits.\n");
         
@@ -319,6 +358,7 @@ int get_lines(char *arg, unsigned long long *lines)
     unsigned long long value = 0;
     unsigned long long factor = 0;
     int   endlen = 0;
+    char *argptr;
     char *endptr;
     
     if (arg == NULL)
@@ -328,8 +368,20 @@ int get_lines(char *arg, unsigned long long *lines)
         return 0;
     }
     
+    argptr = arg;
+    
+    // Skip any leading blanks
+    while (isspace(*argptr)) { argptr++; }
+    
+    if (*argptr == '-')
+    {
+        log_error("Argument 'lines' must be non-negative.\n");
+        
+        return 1;
+    }
+    
     errno = 0;
-    value = strtoull(arg, &endptr, 10);
+    value = strtoull(argptr, &endptr, 10);
     
     if (errno != 0)
     {
@@ -348,7 +400,7 @@ int get_lines(char *arg, unsigned long long *lines)
         }
     }
     
-    if (arg == endptr)
+    if (argptr == endptr)
     {
         log_error("Argument 'lines' does not contain any digits.\n");
         
@@ -407,6 +459,7 @@ int get_status_rate(char *arg, unsigned long long *status_rate, int *status_type
     unsigned long long value = 0;
     unsigned long long factor = 0;
     int   endlen = 0;
+    char *argptr;
     char *endptr;
     
     if (arg == NULL)
@@ -417,8 +470,20 @@ int get_status_rate(char *arg, unsigned long long *status_rate, int *status_type
         return 0;
     }
     
+    argptr = arg;
+    
+    // Skip any leading blanks
+    while (isspace(*argptr)) { argptr++; }
+    
+    if (*argptr == '-')
+    {
+        log_error("Argument 'status' must be non-negative.\n");
+        
+        return 1;
+    }
+    
     errno = 0;
-    value = strtoull(arg, &endptr, 10);
+    value = strtoull(argptr, &endptr, 10);
     
     if (errno != 0)
     {
@@ -437,7 +502,7 @@ int get_status_rate(char *arg, unsigned long long *status_rate, int *status_type
         }
     }
     
-    if (arg == endptr)
+    if (argptr == endptr)
     {
         log_error("Argument 'status' does not contain any digits.\n");
         
