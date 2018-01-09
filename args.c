@@ -24,7 +24,7 @@ struct argp_option options[] =
     { 0 }
 };
 
-const char *argp_program_version = "1.0";
+const char *argp_program_version = VERSION;
 const char  doc[]                = "amp - Read from stdin and write to various output streams.";
 
 struct argp argp = { options, parse_opt, NULL, doc };

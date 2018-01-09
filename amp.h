@@ -20,6 +20,10 @@
 
 
 
+#define VERSION "1.0"
+
+
+
 #define MIN_FD 3
 #define MAX_FD UINT_MAX
 
