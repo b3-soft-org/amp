@@ -53,7 +53,7 @@ So much for basic examples. Let's take full advantage of a powerful shell like `
 amp <hello >hello.copy 3> >(md5sum >hello.md5) 4> >(sha1sum >hello.sha1)
 ```
 
-In this example, `amp` reads the file `hello`, writes it to `stdout` (which is then redirected to `hello.copy`) and uses process substitution to *'pipe'* the content into `md5sum` and `sha1sum` to compute the some checksums and redirect their output into the corresponding checksum files.
+In this example, `amp` reads the file `hello`, writes it to `stdout` (which is then redirected to `hello.copy`) and uses process substitution to *pipe* the content into `md5sum` and `sha1sum` to compute the checksums and redirect their output to the corresponding checksum files.
 
 ---
 
@@ -113,7 +113,7 @@ amp --buffer 4M --status 10s --no-stdout </dev/zero 3>/dev/sdx 4>/dev/sdy 5>/dev
 
 ---
 
-You can tell `amp` to read either a maximum number of bytes (`count`) or a maximum number of `lines`:
+You can limit the maximum number of bytes to read by setting the count argument:
 
 ```bash
 amp --count 4M --status 1M </dev/urandom >random.dat
@@ -121,8 +121,12 @@ amp --count 4M --status 1M </dev/urandom >random.dat
 
 This will read 4 megabytes of random data and write that `random.dat`, showing a status every 1 megabyte.
 
+---
+
+Or instead of a maximum number of bytes, you can limit the number of lines to read:
+
 ```bash
 amp --lines 10 </var/log/syslog >log_10.dat
 ```
 
-This will read 10 lines from `/var/log/syslog` and write that to `log_10.dat`, showing no status.
+This will read 10 lines from `/var/log/syslog` and write that to `log_10.dat` (showing no status).
